@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-crd
+  namespace: cis-crd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-crd
+  template:
+    metadata:
+      labels:
+        app: my-crd
+    spec:
+      containers:
+      - image: "f5devcentral/f5-demo-httpd:openshift"
+        env:
+        - name: F5DEMO_APP
+          value: "website"
+        - name: F5DEMO_NODENAME
+          value: "CRD Example"
+        imagePullPolicy: IfNotPresent
+        name: my-crd
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+
+ 

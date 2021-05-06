@@ -1,0 +1,19 @@
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+   name: transport-server
+   labels:
+     f5cr: "true"
+spec:
+   virtualServerAddress: "10.1.10.23"
+   virtualServerPort: 80
+   mode: standard
+   snat: auto
+   pool:
+     service: my-crd
+     servicePort: 80
+     monitor:
+       type: tcp
+       interval: 10
+       timeout: 10
+

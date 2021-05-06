@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-crd
+  labels:
+    app: my-crd
+    namespace: cis-crd
+spec:
+#  loadBalancerIP: 10.1.10.80
+  externalTrafficPolicy: Local
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    app: my-crd
+

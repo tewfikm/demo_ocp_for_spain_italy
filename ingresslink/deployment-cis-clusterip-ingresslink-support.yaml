@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-bigip-ctlr
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-bigip-ctlr
+  template:
+    metadata:
+      name: k8s-bigip-ctlr
+      labels:
+        app: k8s-bigip-ctlr
+    spec:
+      serviceAccountName: k8s-bigip-ctlr
+      containers:
+        - name: k8s-bigip-ctlr
+          image: "f5networks/k8s-bigip-ctlr:latest"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BIGIP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: bigip-login
+                  key: username
+            - name: BIGIP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bigip-login
+                  key: password
+          command: ["/app/bin/k8s-bigip-ctlr"]
+          args: [
+            "--bigip-partition=ingresslink",
+            "--bigip-username=$(BIGIP_USERNAME)",
+            "--bigip-password=$(BIGIP_PASSWORD)",
+            "--bigip-url=https://10.1.20.240:443",
+            "--pool-member-type=cluster",
+            "--manage-ingress=true",
+            "--manage-configmaps=true",
+# Some AS3 parameters for CIS config
+            "--log-as3-response=true",
+            "--insecure=true",
+            "--override-as3-declaration=default/f5-as3-override",
+            "--share-nodes=true",
+# Some OpenShift parameters
+            "--manage-routes=true",
+            "--route-vserver-addr=10.1.10.100",
+            "--route-http-vserver=ocp_http_vs",
+            "--route-https-vserver=ocp_https_vs",
+            "--route-label=hello-world",
+            "--openshift-sdn-name=/Common/openshift_vxlan",
+#IngressLink Support
+            "--custom-resource-mode=true",
+            "--ingress-link-mode=true"
+           ]
