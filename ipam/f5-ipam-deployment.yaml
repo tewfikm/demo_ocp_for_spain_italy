@@ -18,7 +18,7 @@ spec:
       containers:
       - args:
         - --orchestration=openshift
-        - --ip-range='{"Test":"10.1.10.200-10.1.10.210","Production":"10.1.10.211-10.1.10.220"}'
+        - --ip-range='{"Qualif":"10.1.10.200-10.1.10.210","Prod":"10.1.10.211-10.1.10.220"}'
         - --log-level=DEBUG
         command:
         - /app/bin/f5-ipam-controller

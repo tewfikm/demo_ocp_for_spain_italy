@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cis.f5.com/ipamLabel: Prod
+  labels:
+    app: f5-demo-prod
+  name: f5-demo-prod
+  namespace: default
+spec:
+  ports:
+  - name: f5-demo-prod
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: f5-demo-prod
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:

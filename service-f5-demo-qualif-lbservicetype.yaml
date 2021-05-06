@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cis.f5.com/ipamLabel: Qualif
+  labels:
+    app: f5-demo-qualif
+  name: f5-demo-qualif
+  namespace: default
+spec:
+  ports:
+  - name: f5-demo-qualif
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: f5-demo-qualif
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
