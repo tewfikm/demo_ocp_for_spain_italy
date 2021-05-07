@@ -1,0 +1,21 @@
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: svc1-tcp-transport-server
+  namespace: default
+spec:
+  ipamLabel: "Qualif"
+  virtualServerPort: 8544
+  virtualServerName: Service1-TCP-QUALIF
+  mode: standard
+  snat: auto
+  allowVlans: ["/Common/external"]
+  pool:
+    service: f5-demo-qualif
+    servicePort: 80
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
