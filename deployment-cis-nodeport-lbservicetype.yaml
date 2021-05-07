@@ -54,7 +54,6 @@ spec:
             "--route-http-vserver=ocp_http_vs",
             "--route-https-vserver=ocp_https_vs",
             "--route-label=hello-world",
-            "--openshift-sdn-name=/Common/openshift_vxlan",
 # Some IPAM parameters
             "--ipam=true"
            ]
